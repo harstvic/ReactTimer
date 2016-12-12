@@ -1,13 +1,16 @@
-.top-bar {
+.top-bar, ul {
   background-color: $nav-background;
-  ul {
-    background-color: $nav-background;
-    .menu-text {
-      color: $nav-text-color;
-      a {
-        display: inline;
-        padding: 0;
-      }
+}
+
+.top-bar {
+  .menu-text {
+    color: $nav-text-color;
+    a {
+      display: inline;
+      padding: 0;
     }
+  }
+  .active-link {
+    font-weight: bold;
   }
 }
