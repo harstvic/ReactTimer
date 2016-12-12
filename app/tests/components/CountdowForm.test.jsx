@@ -22,14 +22,25 @@ describe('CountdownForm', () => {
   });
 
   it('should not call onSetCountdown if invalid seconds entered', () => {
-    var spy = expect.spy();
-    var countdownForm = TestUtils.renderIntoDocument(<CountdownForm onSetCountdwon={spy}/>);
+    var spy = expect.createSpy();
+    var countdownForm = TestUtils.renderIntoDocument(<CountdownForm onSetCountdown={spy}/>);
     var $el = $(ReactDOM.findDOMNode(countdownForm));
 
     countdownForm.refs.seconds.value = 'abc';
-    TestUtils.Simulate.submit($el.find(form)[0]);
+    TestUtils.Simulate.submit($el.find('form')[0]);
 
-    expect(spy).toNotHaveBeenCalledWith();
+    expect(spy).toNotHaveBeenCalled();
+  });
+
+  it('should not call onSetCountdown if empty string entered', () => {
+    var spy = expect.createSpy();
+    var countdownForm = TestUtils.renderIntoDocument(<CountdownForm onSetCountdown={spy}/>);
+    var $el = $(ReactDOM.findDOMNode(countdownForm));
+
+    countdownForm.refs.seconds.value = '';
+    TestUtils.Simulate.submit($el.find('form')[0]);
+
+    expect(spy).toNotHaveBeenCalled();
   });
 
 });
