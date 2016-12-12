@@ -19,9 +19,9 @@ describe('Countdown', () => {
       expect(countdown.state.countdownStatus).toBe('started');
 
       setTimeout(() => {
-        expect(countdown.state.count).toBe(9);
+        expect(countdown.state.count).toBe(8);
         done();
-      }, 1001);
+      }, 2001);
     });
 
     it('should never set count less than zero', (done) => {
