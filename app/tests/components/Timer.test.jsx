@@ -11,47 +11,45 @@ describe('Timer', () => {
   });
 
   describe('handleStatusChange', () => {
-    it('should set state to started and count', (done) => {
+    it('should start timer on started status', (done) => {
       var timer = TestUtils.renderIntoDocument(<Timer/>);
-      timer.handleStatusChange('started');
 
-      expect(timer.state.timerStatus).toBe('started');
+      timer.handleStatusChange('started');
+      expect(timer.state.count).toBe(0);
 
       setTimeout(() => {
-        expect(timer.state.count).toBe(2);
+        expect(timer.state.timerStatus).toBe('started');
+        expect(timer.state.count).toBe(1);
         done();
-      }, 2001);
+      }, 1001);
     });
 
-    it('should set timer on pause', (done) => {
+    it('should pause timer on pause status', (done) => {
       var timer = TestUtils.renderIntoDocument(<Timer/>);
+
+      timer.setState({count: 10});
       timer.handleStatusChange('started');
+      timer.handleStatusChange('paused');
 
       setTimeout(() => {
-        timer.handleStatusChange('paused');
-      }, 2001);
-
-      setTimeout(() => {
-        expect(timer.state.count).toBe(2);
         expect(timer.state.timerStatus).toBe('paused');
+        expect(timer.state.count).toBe(10);
         done();
-      }, 2001);
+      }, 1001);
     });
 
-    it('should set state to paused and clear timer', (done) =>{
+    it('should clear count on stopped status', (done) => {
       var timer = TestUtils.renderIntoDocument(<Timer/>);
-      timer.handleStatusChange('started');
 
-      setTimeout(() =>{
-        timer.handleStatusChange('stopped');
-        expect(timer.state.timerStatus).toBe('paused');
+      timer.setState({count: 10});
+      timer.handleStatusChange('started');
+      timer.handleStatusChange('stopped');
+
+      setTimeout(() => {
+        expect(timer.state.timerStatus).toBe('stopped');
         expect(timer.state.count).toBe(0);
-
-        var $el = $(ReactDOM.findDOMNode(timer));
-        var $startButton = $el.find('button:contains(Start)');
-        expect($startButton.length).toBe(1);
         done();
-      }, 2001);
+      }, 1001);
     });
   });
 })
